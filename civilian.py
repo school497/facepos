@@ -40,12 +40,12 @@ class CivilianPOSApp(QMainWindow):
 
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.update_camera)
-        self.timer.start(100)  # Update every 100 milliseconds
+        self.timer.start(100)  
 
         self.civilian_name = None
         self.civilian_balance = 0.0
 
-        self.known_faces = self.load_known_faces("./faces")
+        self.known_faces = self.load_known_faces("faces")
 
         self.video_stream = VideoStream(src=0).start()
 
@@ -115,7 +115,7 @@ class CivilianPOSApp(QMainWindow):
                     self.civilian_balance -= amount
                     self.balance_label.setText(f"Balance: ${self.civilian_balance:.2f}")
                     self.update_civilian_balance_file()
-                    recipient_balance_file = os.path.join("./balances", f"{recipient}_balance.txt")
+                    recipient_balance_file = os.path.join("balances", f"{recipient}_balance.txt")
                     if os.path.exists(recipient_balance_file):
                         with open(recipient_balance_file, "r+") as file:
                             recipient_balance = float(file.read().strip())
@@ -126,8 +126,8 @@ class CivilianPOSApp(QMainWindow):
 
     def deregister(self):
         if self.civilian_balance == 0.0:
-            face_file = os.path.join("./faces", f"{self.civilian_name}.jpg")
-            balance_file = os.path.join("./balances", f"{self.civilian_name}_balance.txt")
+            face_file = os.path.join("faces", f"{self.civilian_name}.jpg")
+            balance_file = os.path.join("balances", f"{self.civilian_name}_balance.txt")
             if os.path.exists(face_file):
                 os.remove(face_file)
             if os.path.exists(balance_file):
@@ -138,7 +138,7 @@ class CivilianPOSApp(QMainWindow):
             QMessageBox.warning(self, "Error", "You cannot deregister while you still have funds in your account.")
 
     def update_civilian_balance_file(self):
-        balance_file = os.path.join("./balances", f"{self.civilian_name}_balance.txt")
+        balance_file = os.path.join("balances", f"{self.civilian_name}_balance.txt")
         with open(balance_file, "w") as file:
             file.write(f"{self.civilian_balance:.2f}")
 
