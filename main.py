@@ -39,13 +39,13 @@ class SelectorWindow(QMainWindow):
     def select_bank_edition(self):
         username, password, ok = self.get_login_credentials("Bank Edition")
         if ok and username == "milo" and password == "milo":
-            os.system("python3 ./bank.py")
+            os.system("python3 bank.py")
             self.close()
         else:
             QMessageBox.warning(self, "Error", "Invalid credentials.")
 
     def select_civilian_edition(self):
-        os.system("python3 ./civilian.py")
+        os.system("python3 civilian.py")
         self.close()
 
     def get_login_credentials(self, edition):
@@ -54,7 +54,7 @@ class SelectorWindow(QMainWindow):
         return username, password, ok1 and ok2
 
     def login_business(self):
-        os.system("python3 ./business.py")
+        os.system("python3 business.py")
         self.close()
 
     def register_business(self):
@@ -64,7 +64,7 @@ class SelectorWindow(QMainWindow):
             password, ok2 = QInputDialog.getText(self, "Register Business", "Enter Password:", QLineEdit.Password)
             if ok1 and ok2:
                 # Save business information to a file
-                business_file = os.path.join("./business", f"{business_name}.txt")
+                business_file = os.path.join("business", f"{business_name}.txt")
                 with open(business_file, "w") as file:
                     file.write(f"{business_name}\n{username}\n{password}\n0")  # Default balance is 0
                 QMessageBox.information(self, "Registration Successful", f"Business '{business_name}' registered successfully.")
