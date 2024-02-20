@@ -121,7 +121,7 @@ class BusinessPOSApp(QMainWindow):
                 break
 
         customer_balance = 0.0
-        with open(os.path.join("../facebank2/balances", f"{customer_name}_balance.txt"), "r") as file:
+        with open(os.path.join("balances", f"{customer_name}_balance.txt"), "r") as file:
             customer_balance = float(file.readline().strip())
 
         transaction_amount, ok = QInputDialog.getDouble(self, "Transaction", "Enter amount to subtract from customer:")
@@ -131,10 +131,10 @@ class BusinessPOSApp(QMainWindow):
                 self.business_balance += transaction_amount
                 self.update_balance_label()
 
-                with open(os.path.join("../facebank2/balances", f"{customer_name}_balance.txt"), "w") as file:
+                with open(os.path.join("balances", f"{customer_name}_balance.txt"), "w") as file:
                     file.write(f"{customer_balance:.2f}")
 
-                with open(os.path.join("../facebank2/business", f"{self.business_name}.txt"), "r+") as file:
+                with open(os.path.join("business", f"{self.business_name}.txt"), "r+") as file:
                     lines = file.readlines()
                     lines[3] = f"{self.business_balance:.2f}\n"
                     file.seek(0)
@@ -157,7 +157,7 @@ class BusinessPOSApp(QMainWindow):
             return
 
         recipient_balance = 0.0
-        with open(os.path.join("../facebank2/balances", f"{recipient}_balance.txt"), "r") as file:
+        with open(os.path.join("balances", f"{recipient}_balance.txt"), "r") as file:
             recipient_balance = float(file.readline().strip())
 
         if self.business_balance >= transfer_amount:
@@ -165,10 +165,10 @@ class BusinessPOSApp(QMainWindow):
             recipient_balance += transfer_amount
             self.update_balance_label()
 
-            with open(os.path.join("../facebank2/balances", f"{recipient}_balance.txt"), "w") as file:
+            with open(os.path.join("balances", f"{recipient}_balance.txt"), "w") as file:
                 file.write(f"{recipient_balance:.2f}")
 
-            with open(os.path.join("../facebank2/business", f"{self.business_name}.txt"), "r+") as file:
+            with open(os.path.join("business", f"{self.business_name}.txt"), "r+") as file:
                 lines = file.readlines()
                 lines[3] = f"{self.business_balance:.2f}\n"
                 file.seek(0)
